@@ -18,7 +18,9 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import binascii, pickle
+import binascii
+import logging
+import pickle
 
 from ClusterShell.MsgTree import MsgTree
 from ClusterShell.NodeSet import NodeSet
@@ -29,6 +31,8 @@ from Shine.Lustre.Actions.Action import Action, CommonAction, ActionInfo, \
 
 # For V2 Compat
 from Shine.Lustre.Actions.Action import ErrorResult
+
+LOGGER = logging.getLogger(__name__)
 
 #
 # SHINE PROXY PROTOCOL
@@ -136,8 +140,7 @@ class FSProxyAction(CommonAction):
         self._errpickle = MsgTree()
         self._silentnodes = NodeSet() # Error nodes without output
 
-        if self.fs.debug:
-            print "FSProxyAction %s on %s" % (action, nodes)
+        LOGGER.debug("FSProxyAction %s on %s", action, nodes)
 
     def info(self):
         return ActionInfo(self, description='Proxy action')
