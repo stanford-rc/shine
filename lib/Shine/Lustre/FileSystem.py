@@ -211,9 +211,11 @@ class FileSystem:
     #
 
     def _attach_component(self, comp):
-        self.components.add(comp)
         if comp.TYPE == MGT.TYPE:
+            if self.mgt and len(self.mgt.get_nids()) > 0:
+                raise FSStructureError("A Lustre FS has only one MGT.")
             self.mgt = comp
+        self.components.add(comp)
 
     def new_target(self, server, type, index, dev, jdev=None, group=None,
                    tag=None, enabled=True, mode='managed', network=None,
@@ -221,21 +223,17 @@ class FileSystem:
         """
         Create a new attached target.
         """
-        if type not in [ 'mgt', 'mdt', 'ost' ]:
+        TYPE_CLASSES = {MGT.TYPE: MGT, MDT.TYPE: MDT, OST.TYPE: OST}
+
+        if type not in TYPE_CLASSES:
             raise FSBadTargetError(type)
 
-        if type == 'mgt' and self.mgt and len(self.mgt.get_nids()) > 0:
-            raise FSStructureError("A Lustre FS has only one MGT.")
-
-        # Instantiate matching target class (eg. 'ost' -> OST).
-        mod = __import__('Shine.Lustre.Target', fromlist=[None])
-        target = getattr(mod, type.upper())(fs=self, server=server,
-                index=index, dev=dev, jdev=jdev, group=group, tag=tag,
-                enabled=enabled, mode=mode, network=network, active=active,
-                dev_run_action=dev_run_action)
-
+        target = TYPE_CLASSES[type](fs=self, server=server, index=index,
+                                    dev=dev, jdev=jdev, group=group, tag=tag,
+                                    enabled=enabled, mode=mode, network=network,
+                                    active=active,
+                                    dev_run_action=dev_run_action)
         self._attach_component(target)
-
         return target
 
     def new_client(self, server, mount_path, mount_options=None, enabled=True):
