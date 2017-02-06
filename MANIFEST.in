@@ -1,6 +1,7 @@
 include LICENSE
 include README
 include ChangeLog
+include conf/ha.yaml
 include conf/models/example.lmf
 include conf/shine.conf
 include conf/storage.conf
@@ -8,6 +9,7 @@ include conf/tuning.conf.example
 include conf/cache/README
 include scripts/shine
 include scripts/shine.init.redhat
+include scripts/shine-ha.service
 include doc/shine.1
 include doc/shine.conf.5
 include doc/extras/vim/syntax/shine*.vim
