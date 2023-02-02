@@ -97,12 +97,12 @@ class Tunefs(FSLiveCommand):
 
         if rc == RC_OK:
             if vlevel > 0:
-                print "Tunefs successful."
+                print("Tunefs successful.")
         else:
             if rc == RC_RUNTIME_ERROR:
                 self.display_proxy_errors(fs)
             if vlevel > 0:
-                print "Tunefs failed"
+                print("Tunefs failed")
 
         # Call a post_tunefs method if defined by the event handler.
         if hasattr(eh, 'post'):

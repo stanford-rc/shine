@@ -119,9 +119,9 @@ class Target(Component, Disk):
         """Compute target global state based on remote nodes results."""
         # Group target's remote nodes statuses by state.
         sdict = {}
-        sorted_states = sorted(self._states.iteritems(), key=itemgetter(1))
+        sorted_states = sorted(iter(self._states.items()), key=itemgetter(1))
         for state, nodes in groupby(sorted_states, key=itemgetter(1)):
-            sdict[state] = map(itemgetter(0), nodes)
+            sdict[state] = list(map(itemgetter(0), nodes))
 
         if None in sdict and len(sdict[None]) == len(self._states):
             return None
@@ -219,14 +219,14 @@ class Target(Component, Disk):
         """
         srvname = None
 
-        servers = [srv for srv, state in self._states.iteritems()
+        servers = [srv for srv, state in self._states.items()
                    if state in (MOUNTED, RECOVERING)]
         if len(servers) > 1:
             return False
         elif len(servers) == 1:
             srvname = servers[0]
         else:
-            servers = [srv for srv, state in self._states.iteritems()
+            servers = [srv for srv, state in self._states.items()
                        if state is not None]
             if len(servers) == 1:
                 srvname = servers[0]
@@ -323,11 +323,11 @@ class Target(Component, Disk):
             if self.journal:
                 self.journal.full_check()
 
-        except DiskNoDeviceException, error:
+        except DiskNoDeviceException as error:
             self.local_state = NO_DEVICE
             return
 
-        except (ComponentError, DiskDeviceError), error:
+        except (ComponentError, DiskDeviceError) as error:
             self.local_state = TARGET_ERROR
             raise ComponentError(self, str(error))
 
@@ -600,7 +600,7 @@ class Journal(Component):
 
         try:
             info = os.stat(self.dev)
-        except OSError, exp:
+        except OSError as exp:
             raise ComponentError(self, str(exp))
 
         if not stat.S_ISBLK(info[stat.ST_MODE]):

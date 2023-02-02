@@ -46,9 +46,9 @@ from ClusterShell.NodeSet import NodeSet, NodeSetException, NodeSetParseError, \
 def print_csdebug(task, msg):
     match = re.match(r'\w+: SHINE:\d:', msg)
     if match:
-        print "%s<pickle>" % match.group(0)
+        print("%s<pickle>" % match.group(0))
     else:
-        print msg
+        print(msg)
 
 
 class Controller(object):
@@ -64,7 +64,7 @@ class Controller(object):
 
     @classmethod
     def print_error(cls, msg):
-        print >> sys.stderr, "Error: %s" % msg
+        print("Error: %s" % msg, file=sys.stderr)
 
     @classmethod
     def handle_options(cls):
@@ -253,31 +253,31 @@ class Controller(object):
             command = COMMAND_LIST[cmdname](options, args)
             rc = command.filter_rc(command.execute())
 
-        except CommandHelpException, error:
+        except CommandHelpException as error:
             self.print_error(error)
 
         # Command exceptions
-        except DisplayError, error:
+        except DisplayError as error:
             self.print_error(error)
-        except CommandException, error:
+        except CommandException as error:
             self.print_error(error)
 
         # Configuration exceptions
-        except ConfigException, error:
+        except ConfigException as error:
             self.print_error("Configuration - %s" % error)
-        except ModelFileValueError, error:
+        except ModelFileValueError as error:
             self.print_error(error)
 
         # File system exceptions
-        except FSRemoteError, error:
+        except FSRemoteError as error:
             self.print_error(error)
             rc = error.rc
-        except [ComponentError, NodeSetParseError, RangeSetParseError], error:
+        except (ComponentError, NodeSetParseError, RangeSetParseError) as error:
             self.print_error(error)
 
         # Special error
         except KeyboardInterrupt:
-            print >> sys.stderr, "Exiting."
+            print("Exiting.", file=sys.stderr)
             rc = 0
 
         # Avoid BrokenPipe error if stdout is closed before we exit

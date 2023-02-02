@@ -36,7 +36,7 @@ class BackendRegistry:
     
     def __iter__(self):
         """Iterate over available backend storages."""
-        for backend in self.backends.values():
+        for backend in list(self.backends.values()):
             yield backend
 
     def get(self, name):

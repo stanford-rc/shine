@@ -45,4 +45,4 @@ class List(Command):
         self.forbidden(self.options.indexes, "-i")
         self.forbidden(self.options.failover, "-F")
 
-        print "\n".join(self.iter_fsname())
+        print("\n".join(self.iter_fsname()))

@@ -77,8 +77,8 @@ class Umount(FSLiveCommand):
             if rc == RC_OK:
                 if vlevel > 0:
                     key = lambda c: c.state == OFFLINE
-                    print "%s was successfully unmounted on %s" % \
-                        (fs.fs_name, comps.filter(key=key).servers())
+                    print("%s was successfully unmounted on %s" % \
+                        (fs.fs_name, comps.filter(key=key).servers()))
             elif rc == RC_RUNTIME_ERROR:
                 self.display_proxy_errors(fs)
 

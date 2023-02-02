@@ -28,10 +28,10 @@ Lustre administration utility.
 %setup
 
 %build
-python setup.py build
+python3 setup.py build
 
 %install
-python setup.py install --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES
+python3 setup.py install --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/shine/models
 cp conf/*.conf* $RPM_BUILD_ROOT/%{_sysconfdir}/shine
 cp conf/ha.yaml $RPM_BUILD_ROOT/%{_sysconfdir}/shine

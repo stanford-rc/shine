@@ -142,7 +142,7 @@ class FileSystem:
         except socket.error:
             logging.raiseExceptions = False
             msg = "Error connecting to syslog, disabling logging."
-            print >> sys.stderr, "WARNING: %s" % msg
+            print("WARNING: %s" % msg, file=sys.stderr)
 
         return logger
 
@@ -190,9 +190,9 @@ class FileSystem:
 
                 # substitute target parameter by local one
                 params['comp'] = comp
-            except KeyError, error:
-                print >> sys.stderr, "ERROR: Component update " \
-                                     "failed (%s)" % str(error)
+            except KeyError as error:
+                print("ERROR: Component update " \
+                                     "failed (%s)" % str(error), file=sys.stderr)
 
         self.hdlr.event_callback(evtype, node=node, **params)
 

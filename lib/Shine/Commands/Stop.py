@@ -87,7 +87,7 @@ class Stop(FSLiveCommand):
 
         if rc == RC_OK:
             if vlevel > 0:
-                print "Stop successful."
+                print("Stop successful.")
         elif rc == RC_RUNTIME_ERROR:
             self.display_proxy_errors(fs)
 

@@ -94,7 +94,7 @@ class Status(FSLiveCommand):
         # Display error messages for each node that failed.
         if len(fs.proxy_errors) > 0:
             self.display_proxy_errors(fs)
-            print
+            print()
 
         result = self.fs_status_to_rc(fs_result)
 

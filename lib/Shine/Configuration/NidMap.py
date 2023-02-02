@@ -50,7 +50,7 @@ class NidMap(object):
 
     def __str__(self):
         output = []
-        for nodes, nids in self._map.iteritems():
+        for nodes, nids in self._map.items():
             output.append("%s -> %s\n" % (nodes, ':'.join(nids)))
         return ''.join(output)
 

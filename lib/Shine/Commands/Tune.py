@@ -62,12 +62,12 @@ class Tune(FSLiveCommand):
         tuning = self.get_tuning(fs_conf, fs.components)
 
         if vlevel > 1:
-            print "Tuning filesystem %s..." % fs.fs_name
+            print("Tuning filesystem %s..." % fs.fs_name)
 
         self.copy_tuning(fs, comps=comps)
 
         if not self.options.remote and vlevel > 1:
-            print tuning
+            print(tuning)
 
         # Call a pre_format method if defined by event handler
         if hasattr(eh, 'pre'):
@@ -80,9 +80,9 @@ class Tune(FSLiveCommand):
             self.display_proxy_errors(fs)
             return RC_RUNTIME_ERROR
         elif status == MOUNTED:
-            print "Filesystem %s successfully tuned." % fs.fs_name
+            print("Filesystem %s successfully tuned." % fs.fs_name)
         else:
-            print "Tuning of filesystem %s failed." % fs.fs_name
+            print("Tuning of filesystem %s failed." % fs.fs_name)
             return RC_RUNTIME_ERROR
 
         return RC_OK

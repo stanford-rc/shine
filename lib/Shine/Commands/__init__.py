@@ -19,6 +19,7 @@
 #
 # $Id$
 
+from importlib import import_module
 
 # ----------------------------------------------------------------------
 # List of enabled commands classes.
@@ -43,8 +44,8 @@ for cmd in [ "Show",
              "Tunefs",
              "Execute"]:
 
-    # Import command class file
-    mod = __import__(cmd, globals(), locals(), [cmd])
+    # Import command module
+    mod = import_module('.{}'.format(cmd), __name__)
 
     # Add class to global command list
     cls = getattr(mod, cmd)

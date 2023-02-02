@@ -92,7 +92,7 @@ class Disk:
         """
         try:
             info = os.stat(self.dev)
-        except OSError, error:
+        except OSError as error:
             if error.errno == errno.ENOENT:
                 raise DiskNoDeviceException(self)
             else:

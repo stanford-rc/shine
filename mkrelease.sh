@@ -35,7 +35,7 @@ clean
 
 # build a source distribution
 export SHINEVERSION=$version
-python setup.py sdist || exit 1
+python3 setup.py sdist || exit 1
 
 # build RPMs
 mkdir -p $TOPDIR/BUILD

@@ -37,4 +37,4 @@ class Config(FSLiveCommand):
     DESCRIPTION = "Display filesystem component information"
 
     def execute_fs(self, fs, fs_conf, hdl, vlevel):
-        print display(self, fs)
+        print(display(self, fs))

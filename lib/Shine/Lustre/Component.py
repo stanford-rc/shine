@@ -20,7 +20,7 @@
 
 import sys
 
-from itertools import ifilter, groupby
+from itertools import groupby
 from operator import attrgetter, itemgetter
 
 from ClusterShell.NodeSet import NodeSet
@@ -142,8 +142,8 @@ class Component(object):
             actions = ""
             if len(self._list_action()):
                 actions = "actions: " + ", ".join(self._list_action())
-            print >> sys.stderr, "ERROR: bad state for %s: %d %s" % \
-                            (self.label, self.state, actions)
+            print("ERROR: bad state for %s: %d %s" % \
+                            (self.label, self.state, actions), file=sys.stderr)
             self.state = RUNTIME_ERROR
 
     def __getstate__(self):
@@ -274,7 +274,7 @@ class ComponentGroup(object):
         return len(self._elems)
 
     def __iter__(self):
-        return self._elems.itervalues()
+        return iter(self._elems.values())
 
     def __contains__(self, comp):
         return comp.uniqueid() in self._elems
@@ -357,7 +357,7 @@ class ComponentGroup(object):
         else:
             filter_key = key
 
-        return ComponentGroup(ifilter(filter_key, iter(self)))
+        return ComponentGroup(filter(filter_key, iter(self)))
 
     def enabled(self):
         """Uses filter() to return only the enabled components."""
@@ -423,7 +423,7 @@ class ComponentGroup(object):
         sortlist = sorted(srvcomps, key=itemgetter(0))
         grouped = groupby(sortlist, key=itemgetter(0))
 
-        return ((grpkey, ComponentGroup(map(itemgetter(1), tpl)))
+        return ((grpkey, ComponentGroup(list(map(itemgetter(1), tpl))))
                 for grpkey, tpl in grouped)
 
 

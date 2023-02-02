@@ -59,7 +59,7 @@ class Install(Command):
         # Use this Shine.FSUtils convenience function.
         lmf = self.get_lmf_path()
         if lmf:
-            print "Using Lustre model file %s" % lmf
+            print("Using Lustre model file %s" % lmf)
         else:
             raise CommandHelpException("Lustre model file for ``%s'' not found:"
                         " please use filename or full LMF path.\n"
@@ -74,16 +74,16 @@ class Install(Command):
                                       excluded=excluded_nodes)
 
         # Register the filesystem in backend
-        print "Registering FS %s to backend..." % fs.fs_name
+        print("Registering FS %s to backend..." % fs.fs_name)
         if self.options.dryrun:
             rc = 0
         else:
             rc = self.register_fs(fs_conf)
         if rc:
             msg = "Error: failed to register FS to backend (rc=%d)" % rc
-            print >> sys.stderr, msg
+            print(msg, file=sys.stderr)
         else:
-            print "Filesystem %s registered." % fs.fs_name
+            print("Filesystem %s registered." % fs.fs_name)
 
         # Helper message.
         # If user specified nodes which were not used, warn him about it.
@@ -104,15 +104,15 @@ class Install(Command):
             if tuning_conf:
                 fs.install(tuning_conf, dryrun=self.options.dryrun)
 
-        except FSRemoteError, error:
-            print "WARNING: Due to error, installation skipped on %s" \
-                   % error.nodes
+        except FSRemoteError as error:
+            print("WARNING: Due to error, installation skipped on %s" \
+                   % error.nodes)
             rc = RC_FAILURE
 
         if not install_nodes and not excluded_nodes:
             # Give pointer to next user step.
-            print "Use `shine format -f %s' to initialize the file system." % \
-                    fs_conf.get_fs_name()
+            print("Use `shine format -f %s' to initialize the file system." % \
+                    fs_conf.get_fs_name())
 
         return rc
 

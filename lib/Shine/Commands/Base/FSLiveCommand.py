@@ -113,7 +113,7 @@ class FSLiveCommand(RemoteCommand):
 
             # Separate each fsname with a blank line
             if not first:
-                print
+                print()
             first = False
 
             # Run the real job

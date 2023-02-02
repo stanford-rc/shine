@@ -102,7 +102,7 @@ class TextTable(object):
     def append(self, row):
         """Append a new row to be displayed. `row' should be a dict."""
         # Keep track of wider value for each field
-        for key, value in row.iteritems():
+        for key, value in row.items():
             real_value_len = len(str(value or ''))
             if self.show_header:
                 header_length = len(self._header(key))
@@ -131,7 +131,7 @@ class TextTable(object):
                 length = matchobj.group(2) or self._max_width[key]
                 length = int(length)
                 value = getter(key) or ""
-            except KeyError, ex:
+            except KeyError as ex:
                 if self.ignore_bad_keys:
                     value = "%%%s" % key
                     length = len(value)

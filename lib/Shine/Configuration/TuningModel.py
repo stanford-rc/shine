@@ -139,7 +139,7 @@ class TuningModel(object):
         Raise an error if there is no defined alias for a parameter.
         """
         # Set parameter real name
-        for name, parameters in self._parameter_dict.items():
+        for name, parameters in list(self._parameter_dict.items()):
             for param in parameters:
                 # Complain if the parameter has no associated alias
                 if param.name not in self.aliases:
@@ -157,7 +157,7 @@ class TuningModel(object):
         # Build the patterns to retrieve alias and parameter declaration
         alias_re = re.compile("alias\s+(\S+)\s*=\s*(\S+)$")
         parameter_re = re.compile('("[^"]+"|\S+)\s+(\S+)\s+(\S+)$')
-        supported = NodeSet.fromlist(list(NODE_TYPES) + TYPE_ALIASES.keys())
+        supported = NodeSet.fromlist(list(NODE_TYPES) + list(TYPE_ALIASES.keys()))
 
         # Open the file to read each lines
         try:
@@ -191,7 +191,7 @@ class TuningModel(object):
 
             tuning_file.close()
 
-        except IOError, error:
+        except IOError as error:
             msg = "Error while reading tuning configuration file: %s" % error
             raise TuningError(msg)
 
@@ -205,11 +205,11 @@ class TuningModel(object):
         msg = ""
         
         # Walk through the list of aliases and display each one of them
-        for alias, fullpath in self.aliases.items():
+        for alias, fullpath in list(self.aliases.items()):
             msg += "Tuning alias: %s <=> %s\n" % (alias, fullpath)
             
         # Walk through the list of parameters and display each one of them
-        for params in self._parameter_dict.values():
+        for params in list(self._parameter_dict.values()):
             msg += "\n".join(["Tuning param: %s" % param for param in params])
             msg += "\n"
             
@@ -226,7 +226,7 @@ class TuningModel(object):
         params = []
 
         # Walk through the list of tuning parameters
-        for parameters in self._parameter_dict.values():
+        for parameters in list(self._parameter_dict.values()):
 
             # Walk through the list of parameters to identify the one that must
             # be applied to the considered node.
