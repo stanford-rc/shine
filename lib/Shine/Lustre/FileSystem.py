@@ -304,7 +304,10 @@ class FileSystem:
                 comp.state = RUNTIME_ERROR
 
             if comp.state not in expected_states:
-                result = max(result, comp.state)
+                if result is None:
+                    result = comp.state
+                else:
+                    result = max(result, comp.state)
 
             # Compute component's server.
             # Although not the best place semantically speaking to perform this
