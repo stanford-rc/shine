@@ -203,8 +203,8 @@ class FileSystem:
         Hostnames are replaced by 'THIS_SHINE_HOST' to allow message grouping.
         Grouping outputs which only differ by the host name.
         """
-        message = message.replace(str(nodes), 'THIS_SHINE_HOST')
-        self.proxy_errors.add(NodeSet(nodes), message)
+        message = message.replace(str(nodes).encode(), b'THIS_SHINE_HOST')
+        self.proxy_errors.add(str(nodes), message)
 
     #
     # file system construction
@@ -317,7 +317,7 @@ class FileSystem:
             # best place to compute the component server.
             if comp.update_server() is False:
                 msg = "WARNING: %s is mounted multiple times" % comp.label
-                self._handle_shine_proxy_error(str(comp.server.hostname), msg)
+                self._handle_shine_proxy_error(str(comp.server.hostname), msg.encode())
 
         # result could be equal to 0 (MOUNTED)
         if result is not None:

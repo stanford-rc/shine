@@ -37,7 +37,7 @@ LOGGER = logging.getLogger(__name__)
 #
 # SHINE PROXY PROTOCOL
 #
-SHINE_MSG_MAGIC = "SHINE:"
+SHINE_MSG_MAGIC = b"SHINE:"
 SHINE_MSG_VERSION = 3
 
 class ProxyActionUnpackError(Exception):
@@ -49,8 +49,8 @@ class ProxyActionUnpickleError(Exception):
 def shine_msg_pack(**kwargs):
     """Shine event serialization method."""
     # To be more evolutive, Shine message contains only a dict.
-    return "%s%d:%s" % (SHINE_MSG_MAGIC, SHINE_MSG_VERSION,
-                        binascii.b2a_base64(pickle.dumps(kwargs, -1)))
+    return b"%s%d:%s" % (SHINE_MSG_MAGIC, SHINE_MSG_VERSION,
+                         binascii.b2a_base64(pickle.dumps(kwargs, -1)))
 
 def shine_msg_unpack(msg):
     """
@@ -64,7 +64,7 @@ def shine_msg_unpack(msg):
 
     # Identified shine msg of the form SHINE:<version>:<pickle>
     try:
-        version, data = msg[len(SHINE_MSG_MAGIC):].split(':', 1)
+        version, data = msg[len(SHINE_MSG_MAGIC):].split(b':', 1)
         version = int(version)
     except Exception as exp:
         raise ProxyActionUnpackError("Malformed Shine message: %s" % exp)
@@ -285,18 +285,18 @@ class FSProxyAction(CommonAction):
                     # Handle proxy command error
                     nodes = NodeSet.fromlist(nodes)
                     msg = "Remote action %s failed: %s\n" % \
-                                                        (self.action, buffers)
-                    self.fs._handle_shine_proxy_error(nodes, msg)
+                                                        (self.action, buffers.message())
+                    self.fs._handle_shine_proxy_error(nodes, msg.encode())
 
         # Raise errors for each unpickling error,
         # which could happen mostly when Shine exits with 0.
         for buffers, nodes in self._errpickle.walk():
             nodes = NodeSet.fromlist(nodes)
-            self.fs._handle_shine_proxy_error(nodes, str(buffers))
+            self.fs._handle_shine_proxy_error(nodes, str(buffers).encode())
 
         # Raise an error for nodes without output
         if len(self._silentnodes) > 0:
             msg = "Remote action %s failed: No response" % self.action
-            self.fs._handle_shine_proxy_error(self._silentnodes, msg)
+            self.fs._handle_shine_proxy_error(self._silentnodes, msg.encode())
 
         self.set_status(status)
