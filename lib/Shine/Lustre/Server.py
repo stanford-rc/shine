@@ -93,6 +93,12 @@ class Server(object):
     def __str__(self):
         return "%s (%s)" % (self.hostname, ','.join(self.nids))
 
+    def __eq__(self, other):
+        return str(self).__eq__(str(other))
+
+    def __lt__(self, other):
+        return str(self).__lt__(str(other))
+
     @classmethod
     def hostname_long(cls):
         """
