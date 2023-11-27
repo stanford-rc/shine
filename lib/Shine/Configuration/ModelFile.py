@@ -545,6 +545,8 @@ class ModelFile(object):
         """Iterate over the keys with non-empty value."""
         return (key for key, value in self._elements.items() if len(value))
 
+    keys = iterkeys
+
     def iteritems(self):
         """Iterate over the keys and non-empty values.
         Multiple elements will yield for each element in it."""
@@ -552,6 +554,8 @@ class ModelFile(object):
             if len(element):
                 for value in element:
                     yield key, value
+
+    items = iteritems
 
     # Content access
 
