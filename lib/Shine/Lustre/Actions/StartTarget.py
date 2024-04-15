@@ -79,7 +79,7 @@ class StartTarget(FSAction):
         # Build command
         #
         command = ["mkdir -p \"%s\"" % mount_path]
-        command += ["&& /bin/mount -t lustre"]
+        command += ["&& /bin/mount -t lustre_tgt"]
 
         # Loop devices handling
         if not self.comp.dev_isblk:
