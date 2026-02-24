@@ -113,7 +113,7 @@ class CommonFormat(FSAction):
             if self.comp.network and (self.comp_is_mdt or self.comp_is_ost):
 
                 # Parse network field
-                match = re.match("^([a-z0-9]+?)(\d+)?$", self.comp.network)
+                match = re.match(r"^([a-z0-9]+?)(\d+)?$", self.comp.network)
                 if not match:
                     raise ValueError("Unrecognized network: %s" %
                                      self.comp.network)
