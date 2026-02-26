@@ -19,11 +19,23 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from distutils.core import setup
+from setuptools import setup
+import re
+from pathlib import Path
 import os
 
+def get_version():
+    v = os.environ.get("SHINEVERSION")
+    if v:
+        return v
+    init_py = Path(__file__).parent / "lib" / "Shine" / "__init__.py"
+    m = re.search(r'^public_version\s*=\s*"([^"]+)"', init_py.read_text(), re.M)
+    if not m:
+        raise RuntimeError("Cannot determine version")
+    return m.group(1)
+
 setup(name='shine',
-      version=os.environ['SHINEVERSION'],
+      version=get_version(),
       license='GPL',
       description='Lustre administration utility',
       author='Stephane Thiell',
@@ -41,10 +53,8 @@ setup(name='shine',
                'Shine.Lustre',
                'Shine.Lustre.Actions'],
       data_files=[('/usr/sbin', ['scripts/shine']),
-                  ('/var/cache/shine/conf', ['conf/cache/README']),
                   ('/usr/share/vim/vim70/syntax', ['doc/extras/vim/syntax/shine.vim']),
                   ('/usr/share/vim/vim70/syntax', ['doc/extras/vim/syntax/shinefs.vim']),
-                  ('/usr/share/vim/vim70/ftdetect', ['doc/extras/vim/ftdetect/shine.vim']),
-                  ('/usr/share/shine', ['scripts/shine.init.redhat'])]
+                  ('/usr/share/vim/vim70/ftdetect', ['doc/extras/vim/ftdetect/shine.vim'])]
      )
 

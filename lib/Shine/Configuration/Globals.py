@@ -118,6 +118,12 @@ class Globals(object):
             else:
                 return False
 
+        def _ensure_dir(self, path, mode=0o755):
+            if path:
+                os.makedirs(path, mode=mode, exist_ok=True)
+            return path
+
+
         def get_backend(self):
             return self.get('backend')
 
@@ -128,7 +134,7 @@ class Globals(object):
             return self.get('status_dir')
 
         def get_conf_dir(self):
-            return self.get('conf_dir')
+            return self._ensure_dir(self.get('conf_dir'))
 
         def get_lmf_dir(self):
             return self.get('lmf_dir')

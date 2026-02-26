@@ -1,6 +1,0 @@
-addon: shine
-description: "Syntax highlighting for shine"
-files:
-  - ftdetect/shine.vim
-  - syntax/shine.vim
-  - syntax/shinefs.vim
