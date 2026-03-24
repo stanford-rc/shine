@@ -1,3 +1,18 @@
 .gitignore
 *.pyc
+CLAUDE.md
+.claude/
 
+
+# Debian packaging build artifacts
+.pybuild/
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.debhelper.log
+debian/*.debhelper
+debian/*.substvars
+debian/python3-shine/
+debian/shine/
+debian/tmp/
+lib/shine.egg-info/

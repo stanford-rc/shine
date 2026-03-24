@@ -1,9 +1,8 @@
 Source: shine
 Section: admin
 Priority: optional
-Maintainer: Debian Python Team <team+python@tracker.debian.org>
-Uploaders: Stéphane Hiell <sthiell@stanford.edu>
-Build-Depends: debhelper (>= 13), dh-python, python3-all, python3-setuptools
+Maintainer: Stéphane Thiell <sthiell@stanford.edu>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-all, python3-setuptools
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
 Homepage: https://github.com/stanford-rc/shine
@@ -11,14 +10,19 @@ Homepage: https://github.com/stanford-rc/shine
 Package: python3-shine
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python3:Depends}, python3-clustershell (>= 1.5.1)
-Description: Lustre administration utility (Python 3 modules)
+Depends: ${misc:Depends}, ${python3:Depends}, python3-clustershell (>= 1.5.1),
+ python3-yaml
+Suggests: python3-requests
+Description: Lustre administration utility (Python 3 library)
  Shine is a Lustre administration utility.
- This package contains the Python 3 modules.
+ .
+ This package contains the Python 3 library modules.
 
 Package: shine
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-shine (= ${binary:Version})
 Description: Lustre administration utility
- Shine is a Lustre administration utility (CLI).
- This package contains the command line tool, configuration, manpages and service unit.
+ Shine is a Lustre administration utility.
+ .
+ This package contains the command-line tool, configuration, and systemd
+ services.

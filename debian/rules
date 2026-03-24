@@ -1,14 +1,28 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --with python3 --buildsystem=none
+	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_auto_clean:
-	rm -rf build
-	rm -rf lib/shine.egg-info
+	dh_auto_clean
+	rm -rf build lib/shine.egg-info
 
-override_dh_auto_build:
-	python3 setup.py build
+override_dh_install:
+	dh_install
+	# Install config files
+	install -d debian/shine/etc/shine/models
+	install -m 644 conf/*.conf debian/shine/etc/shine/
+	install -m 644 conf/ha.yaml debian/shine/etc/shine/
+	install -m 644 conf/models/*.lmf debian/shine/etc/shine/models/
+	# Install default file
+	install -D -m 644 debian/shine.default debian/shine/etc/default/shine
+	# Install systemd service
+	install -D -m 644 debian/shine.service.in debian/shine/usr/lib/systemd/system/shine.service
+	# Create cache directory
+	install -d debian/shine/var/cache/shine/conf
 
-override_dh_auto_install:
-	python3 setup.py install --root=$(CURDIR)/debian/tmp --install-layout=deb
+# Do not enable nor start any service on package install: shine.service and
+# shine-ha.service require site-specific configuration first (same behavior
+# as the RPM packaging).
+override_dh_installsystemd:
+	dh_installsystemd --no-enable --no-start

@@ -1,12 +1,12 @@
-shine (1.5.1.8-1) UNRELEASED; urgency=medium
+shine (1.5.1.9-1) unstable; urgency=medium
 
-  * New upstream snapshot: fix Python 3.13 invalid escape sequence
-    warnings.
+  * New upstream snapshot
+  * Fix Python 3.13 invalid escape sequence warnings
+  * Modernize Debian packaging for Python 3
+  * Add /var/cache directory auto-creation
+  * Install systemd units under /usr/lib/systemd/system (usr-merge)
+  * Do not enable or start services on package install
+  * Depend on python3-yaml (Shine.HA), suggest python3-requests
+  * Install vim syntax files under /usr/share/vim/vimfiles
 
- -- Stéphane Thiell <sthiell@stanford.edu>  Tue, 24 Feb 2026 11:40:25 -0800
-
-shine (1.5.1.7-1) unstable; urgency=medium
-
-  * Modernize Debian packaging for Python 3 (oak_ha branch).
-
- -- Stéphane Thiell <sthiell@stanford.edu>  Mon, 23 Feb 2026 00:00:00 +0000
+ -- Stéphane Thiell <sthiell@stanford.edu>  Thu, 09 Jul 2026 12:00:00 -0700

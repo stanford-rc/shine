@@ -1,0 +1,14 @@
+[Unit]
+Description=Shine Lustre Client Mount Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-/etc/default/shine
+ExecStart=/usr/sbin/shine mount -L $OPTS
+ExecStop=/usr/sbin/shine umount -L $OPTS
+
+[Install]
+WantedBy=multi-user.target

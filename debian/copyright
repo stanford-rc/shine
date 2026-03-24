@@ -1,11 +1,10 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: shine
-Source: http://lustre-shine.sourceforge.net/
+Source: https://github.com/stanford-rc/shine
 
 Files: *
 Copyright: 2008-2015 Commissariat à l'Energie Atomique et aux Energies Alternatives (CEA)
-Authors: Stephane Thiell <stephane.thiell@cea.fr>
-         Aurelien Degremont  <aurelien.degremont@cea.fr>
+           2017-2026 Board of Trustees, Leland Stanford Jr. University
 License: GPL-2+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

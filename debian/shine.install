@@ -1,9 +1,6 @@
-conf/*.conf*              etc/shine/
-conf/ha.yaml              etc/shine/
-conf/models/*             etc/shine/models/
-debian/shine.default      etc/default/
-doc/shine.1               usr/share/man/man1/
-doc/shine.conf.5          usr/share/man/man5/
-scripts/shine-ha.service  lib/systemd/system/
-usr/sbin/shine            usr/sbin/
-usr/share/vim/            usr/share/vim/
+usr/sbin/shine
+usr/share/vim/vim70/syntax usr/share/vim/vimfiles/
+usr/share/vim/vim70/ftdetect usr/share/vim/vimfiles/
+doc/shine.1 usr/share/man/man1/
+doc/shine.conf.5 usr/share/man/man5/
+scripts/shine-ha.service usr/lib/systemd/system/
