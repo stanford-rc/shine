@@ -1,3 +1,9 @@
+shine (1.5.1.10-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Stéphane Thiell <sthiell@stanford.edu>  Thu, 09 Jul 2026 12:20:14 -0700
+
 shine (1.5.1.9-1) unstable; urgency=medium
 
   * New upstream snapshot
