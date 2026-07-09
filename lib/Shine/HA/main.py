@@ -187,7 +187,7 @@ def main():
     LOGGER.info('loading config file "%s"', pargs.config_file)
     try:
         with open(pargs.config_file) as conff:
-            confd = yaml.load(conff)
+            confd = yaml.safe_load(conff)
             LOGGER.debug('loaded configuration: %s', pprint.pformat(confd))
     except IOError as exc:
         LOGGER.error(exc)
