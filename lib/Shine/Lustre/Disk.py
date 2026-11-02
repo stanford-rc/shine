@@ -26,6 +26,7 @@ Lustre Disk abstraction module.
 import copy
 import errno
 import os
+import re
 import stat
 import subprocess
 
@@ -41,6 +42,9 @@ LDD_F_REWRITE_LDD = 0x0080  # rewrite the LDD
 LDD_F_WRITECONF = 0x0100    # regenerate all logs for this fs
 LDD_F_UPGRADE14 = 0x0200    # COMPAT_14
 LDD_F_PARAM = 0x0400        # process as lctl conf_param
+
+# sysfs block directory, used to look at md arrays (overridable for tests)
+SYSFS_BLOCK = '/sys/block'
 
 
 class DiskDeviceError(Exception):
@@ -85,6 +89,29 @@ class Disk:
         self.dev_size = other.dev_size
         self.ldd_svname = copy.copy(other.ldd_svname)
         self._ldd_flags = other._ldd_flags
+
+    def _md_assembled(self):
+        """
+        Return True if self.dev is a /dev/mdN array that the kernel still has
+        assembled, whether or not its /dev node exists.
+        """
+        name = os.path.basename(self.dev)
+        if not re.match(r'^md[0-9]+$', name):
+            return False
+        mddir = os.path.join(SYSFS_BLOCK, name, 'md')
+        try:
+            entries = os.listdir(mddir)
+        except OSError:
+            return False
+        # member disks still bound to the array
+        if [entry for entry in entries if entry.startswith('dev-')]:
+            return True
+        try:
+            with open(os.path.join(mddir, 'array_state')) as fstate:
+                state = fstate.read().strip()
+        except (IOError, OSError):
+            return False
+        return state not in ('', 'clear')
 
     def _device_check(self):
         """
