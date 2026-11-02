@@ -328,7 +328,13 @@ class Target(Component, Disk):
                 self.journal.full_check()
 
         except DiskNoDeviceException as error:
-            self.local_state = NO_DEVICE
+            # The device node is missing. Lustre status does not depend on
+            # it, so check it anyway: a mounted target is reported as such.
+            # If not mounted, an md array still assembled without its node
+            # is reported offline, not no_device.
+            self.lustre_check()
+            if self.local_state == OFFLINE and not self._md_assembled():
+                self.local_state = NO_DEVICE
             return
 
         except (ComponentError, DiskDeviceError) as error:
