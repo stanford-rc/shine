@@ -65,6 +65,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 05 2026 Kilian Cavalotti <kilian@stanford.edu> - 1.5.1.11-1
+- Report an assembled md array without its /dev file as offline, and a
+  mounted target without its /dev file as mounted (#1)
+- Fix the tunefs.lustre label check for fsname:svname and fsname=svname
+
 * Thu Nov 05 2026 Kilian Cavalotti <kilian@stanford.edu> - 1.5.1.10-1
 - Require the Python 3 ClusterShell module and PyYAML, BuildRequire
   python3-setuptools
