@@ -14,7 +14,9 @@ Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Prefix: %{_prefix}
 BuildArchitectures: noarch
-Requires: clustershell >= 1.5.1
+Requires: python3-clustershell >= 1.10
+Requires: python3-PyYAML
+BuildRequires: python3-setuptools
 %if %{with_systemd}
 BuildRequires: systemd-units
 %endif
@@ -63,6 +65,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 05 2026 Kilian Cavalotti <kilian@stanford.edu> - 1.5.1.10-1
+- Require the Python 3 ClusterShell module and PyYAML, BuildRequire
+  python3-setuptools
+
 * Sun Feb  5 2017 <sthiell@stanford.edu> - 1.4-2
 - Update from oak_ha branch at Stanford
 - Add shine-ha.service
