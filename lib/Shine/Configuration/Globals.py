@@ -81,6 +81,11 @@ class Globals(object):
             self.add_element('default_timeout',     check='digit',
                     default=30)
 
+            # Messages sent back by remote shine commands: pickle protocol.
+            # 4 is readable by every Python 3.4+, whatever the local version.
+            self.add_element('pickle_protocol',     check='digit',
+                    default=4)
+
             # Commands
             self.add_element('command_path',        check='path')
 
@@ -147,6 +152,9 @@ class Globals(object):
 
         def get_ssh_fanout(self):
             return self.get('ssh_fanout')
+
+        def get_pickle_protocol(self):
+            return int(self.get('pickle_protocol'))
 
 
 class DefaultElement(SimpleElement):

@@ -25,6 +25,7 @@ import pickle
 from ClusterShell.MsgTree import MsgTree
 from ClusterShell.NodeSet import NodeSet
 
+from Shine.Configuration.Globals import Globals
 from Shine.Lustre.Component import INPROGRESS, RUNTIME_ERROR
 from Shine.Lustre.Actions.Action import Action, CommonAction, ActionInfo, \
                                         ACT_OK, ACT_ERROR
@@ -49,8 +50,11 @@ class ProxyActionUnpickleError(Exception):
 def shine_msg_pack(**kwargs):
     """Shine event serialization method."""
     # To be more evolutive, Shine message contains only a dict.
+    # The pickle protocol is configurable (shine.conf: pickle_protocol) so
+    # that nodes running different Python versions can read each other.
+    data = pickle.dumps(kwargs, Globals().get_pickle_protocol())
     return b"%s%d:%s" % (SHINE_MSG_MAGIC, SHINE_MSG_VERSION,
-                         binascii.b2a_base64(pickle.dumps(kwargs, -1)))
+                         binascii.b2a_base64(data))
 
 def shine_msg_unpack(msg):
     """

@@ -134,6 +134,10 @@ If not set, no tuning is applied.
 is the maximum number of simultaneous local commands and remote connections.
 .It Ic ssh_connect_timeout Ns = Ns Ar secs
 is the timeout in seconds for ssh connections.
+.It Ic pickle_protocol Ns = Ns Ar number
+is the pickle protocol used for the messages sent back by remote shine
+commands. All nodes must be able to read it. Default is 4, supported by
+Python 3.4 and later.
 .El
 .Sh FILES                \" File used or created by the topic of the man page
 .Bl -tag -width "/Library/StartupItems/balanced/uninstall.sh" -compact
