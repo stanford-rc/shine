@@ -65,6 +65,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 05 2026 Kilian Cavalotti <kilian@stanford.edu> - 1.5.1.12-1
+- Report unpickling errors from remote nodes instead of failing with a
+  traceback (#5)
+- New shine.conf setting pickle_protocol, default 4 (#6)
+
 * Thu Nov 05 2026 Kilian Cavalotti <kilian@stanford.edu> - 1.5.1.11-1
 - Report an assembled md array without its /dev file as offline, and a
   mounted target without its /dev file as mounted (#1)
