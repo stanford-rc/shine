@@ -223,13 +223,14 @@ class FSProxyAction(CommonAction):
         except ProxyActionUnpickleError as exp:
             # Maintain a standalone list of unpickling errors.
             # Node could have unpickling error but still exit with 0
-            msg = str(exp)
-            if msg not in self._errpickle.get(node, ""):
+            msg = str(exp).encode()
+            if msg not in self._errpickle.get(node, b""):
                 self._errpickle.add(node, msg)
         except AttributeError as exp:
             msg = "Cannot read message (check Shine and ClusterShell " \
                   "version): %s" % str(exp)
-            if msg not in self._errpickle.get(node, ""):
+            msg = msg.encode()
+            if msg not in self._errpickle.get(node, b""):
                 self._errpickle.add(node, msg)
         except ProxyActionUnpackError:
             # Store output that is not a shine message
@@ -292,7 +293,7 @@ class FSProxyAction(CommonAction):
         # which could happen mostly when Shine exits with 0.
         for buffers, nodes in self._errpickle.walk():
             nodes = NodeSet.fromlist(nodes)
-            self.fs._handle_shine_proxy_error(nodes, str(buffers).encode())
+            self.fs._handle_shine_proxy_error(nodes, buffers.message())
 
         # Raise an error for nodes without output
         if len(self._silentnodes) > 0:
