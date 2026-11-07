@@ -1,0 +1,10 @@
+/var/log/shine-ha.log {
+    weekly
+    maxsize 1G
+    rotate 6
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}

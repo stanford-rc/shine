@@ -45,6 +45,7 @@ gzip -c doc/shine.conf.5 >$RPM_BUILD_ROOT/%{_mandir}/man5/shine.conf.5.gz
 
 %if %{with_systemd}
 install -p -D -m 644 scripts/shine-ha.service %{buildroot}%{_unitdir}/shine-ha.service
+install -p -D -m 644 conf/shine-ha.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/shine-ha
 %endif
 
 %clean
@@ -62,6 +63,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{_mandir}/man5/shine.conf.5.gz
 %if %{with_systemd}
 %{_unitdir}/shine-ha.service
+%config(noreplace) %{_sysconfdir}/logrotate.d/shine-ha
 %endif
 
 %changelog
