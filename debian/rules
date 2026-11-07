@@ -13,6 +13,7 @@ override_dh_install:
 	install -d debian/shine/etc/shine/models
 	install -m 644 conf/*.conf debian/shine/etc/shine/
 	install -m 644 conf/ha.yaml debian/shine/etc/shine/
+	install -D -m 644 conf/shine-ha.logrotate debian/shine/etc/logrotate.d/shine-ha
 	install -m 644 conf/models/*.lmf debian/shine/etc/shine/models/
 	# Install default file
 	install -D -m 644 debian/shine.default debian/shine/etc/default/shine
