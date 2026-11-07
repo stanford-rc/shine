@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 EnvironmentFile=-/etc/default/shine
 EnvironmentFile=-/etc/sysconfig/shine
-ExecStart=/usr/bin/python3 -m Shine.HA.main -f /etc/shine/ha.yaml --debug --run $OPTS
+ExecStart=/usr/bin/python3 -m Shine.HA.main -f /etc/shine/ha.yaml --run $OPTS
 Restart=on-failure
 RestartSec=60
 
